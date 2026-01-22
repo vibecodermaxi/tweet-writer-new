@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Article - Casual, X/Twitter Article Style</title>
+    <meta name="description" content="See a real article created entirely by Draper Writer with zero human edits. From brief to published in 2 iterations.">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface-elevated: #1a1a1a;
+            --border: #262626;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #f97316;
+            --accent-dim: #ea580c;
+            --pass: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--pass);
+            color: var(--bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Brief Section */
+        .brief-section {
+            padding: 48px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .brief-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .brief-card h3 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .brief-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .brief-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .brief-item .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .brief-item .value {
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .brief-notes {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .brief-notes ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .brief-notes li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .brief-notes li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Article Section */
+        .article-section {
+            padding: 48px 0;
+        }
+
+        .article-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: var(--surface-elevated);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .score-badge {
+            background: var(--pass);
+            color: var(--bg);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .article-content {
+            padding: 32px 24px;
+        }
+
+        .article-content h1 {
+            font-size: 1.75rem;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .article-content h2 {
+            font-size: 1.25rem;
+            margin: 32px 0 16px;
+            color: var(--text);
+        }
+
+        .article-content p {
+            margin-bottom: 16px;
+            color: var(--text-muted);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        .article-content li {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .article-content strong {
+            color: var(--text);
+        }
+
+        .article-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+
+        .sources {
+            background: var(--surface-elevated);
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .sources h4 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .sources ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sources li {
+            font-size: 0.85rem;
+        }
+
+        .sources a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 48px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .cta-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-dim);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .stats {
+                gap: 24px;
+            }
+
+            .article-content {
+                padding: 24px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Draper Writer</a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="https://github.com/jayteststhings/draper-writer" target="_blank" rel="noopener">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Example Article</h1>
+                <p class="subtitle">Created entirely by Draper Writer with zero human edits.</p>
+                <div class="badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    100% AI Generated
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stat">
+                <div class="stat-value">7/7</div>
+                <div class="stat-label">Quality Score</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Iterations</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">1,047</div>
+                <div class="stat-label">Words</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">7</div>
+                <div class="stat-label">Sources</div>
+            </div>
+        </section>
+
+        <section class="brief-section">
+            <div class="container">
+                <div class="section-label">Step 1: The Brief</div>
+                <div class="brief-card">
+                    <h3>Input provided to Draper Writer</h3>
+                    <div class="brief-grid">
+                        <div class="brief-item">
+                            <span class="label">Topic</span>
+                            <span class="value">AI automation is killing the SaaS software industry</span>
+                        </div>
+                        <div class="brief-item">
+                            <span class="label">Type</span>
+                            <span class="value">Blog post</span>
+                        </div>
+                        <div class="brief-item">
+                            <span class="label">Audience</span>
+                            <span class="value">Gen-Z users on X/Twitter</span>
+                        </div>
+                        <div class="brief-item">
+                            <span class="label">Goal</span>
+                            <span class="value">Provoke discussion</span>
+                        </div>
+                        <div class="brief-item">
+                            <span class="label">Word Count</span>
+                            <span class="value">800-1200 words</span>
+                        </div>
+                        <div class="brief-item">
+                            <span class="label">Tone</span>
+                            <span class="value">Casual/conversational</span>
+                        </div>
+                    </div>
+                    <div class="brief-notes">
+                        <ul>
+                            <li>Provocative topic designed to spark debate</li>
+                            <li>Gen-Z audience expects authentic, unfiltered takes</li>
+                            <li>Twitter/X audience values concise, punchy writing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="article-section">
+            <div class="container">
+                <div class="section-label">Step 2: The Output</div>
+                <div class="article-card">
+                    <div class="article-header">
+                        <div class="article-meta">
+                            <span>Jan 19, 2026</span>
+                            <span>1,047 words</span>
+                            <span>2 iterations</span>
+                        </div>
+                        <div class="score-badge">7/7 PASS</div>
+                    </div>
+                    <div class="article-content">
+                        <h1>Your $49/Month Software Subscription Just Got Weird</h1>
+
+                        <p>You know how your company pays for like 10 different apps and everyone actually uses maybe 2 of them? Slack for memes, Notion for that one doc someone made 8 months ago, and a CRM that your sales team definitely isn't updating.</p>
+
+                        <p>Well, all of that is about to get really awkward.</p>
+
+                        <p>Turns out AI can now do the job of 10 people. Not "help" them. Actually replace them. <a href="https://www.bain.com/insights/will-agentic-ai-disrupt-saas-technology-report-2025/">Bain found</a> a single AI agent doing sales outreach sent 1,000 emails, qualified leads, and booked meetings - the work that used to need an entire team. No CRM login required.</p>
+
+                        <p>We're not talking about ChatGPT writing your emails faster. We're talking about the email job not existing anymore.</p>
+
+                        <h2>The Part Where the Business Model Breaks</h2>
+
+                        <p>Here's what's wild: most software companies charge per person. You pay $20/month per employee, they do the math, everybody's happy.</p>
+
+                        <p>But what happens when companies start firing people and replacing them with AI agents that don't need a "seat"?</p>
+
+                        <p>Salesforce already panicked and created this thing called AELA (Agentic Enterprise License Agreement). Basically "just pay us a flat fee because we can't count seats anymore lol." <a href="https://www.glean.com/perspectives/will-ai-agents-replace-saas-tools-as-the-new-operating-layer-of-work">Per-user pricing is collapsing</a> as companies run thousands of AI agents that don't technically work there but somehow do all the work.</p>
+
+                        <p>The entire $197 billion SaaS industry is built on a pricing model that just... stopped making sense.</p>
+
+                        <h2>Wait, Why Do We Even Need Apps Anymore?</h2>
+
+                        <p>SaaS was supposed to be the innovation. You went from one massive Oracle system to like 50 different specialized tools. Unbundling, they called it.</p>
+
+                        <p>Now AI is just bundling it all back together. Why would you click through 3 different apps when an AI agent can just hit all the APIs at once and do the thing in 2 seconds?</p>
+
+                        <p><a href="https://www.constellationr.com/blog-news/insights/enterprise-technology-2026-15-ai-saas-data-business-trends-watch">Enterprise AI adoption jumped 280%</a> recently. Companies aren't asking "should we try AI?" anymore. They're asking "wait, are we building an AI product or just slapping GPT onto our old thing and hoping nobody notices?"</p>
+
+                        <p>Real companies are already doing this in production:</p>
+                        <ul>
+                            <li>Intercom's AI handles customer support tickets</li>
+                            <li>Cursor is replacing traditional code editors</li>
+                            <li>ADP automated time-entry approvals</li>
+                        </ul>
+
+                        <p>These aren't demos. This is happening right now.</p>
+
+                        <h2>The "I Could Build That in a Weekend" Problem</h2>
+
+                        <p>Here's the uncomfortable part: if your software is basically a fancy form that saves stuff to a database, you're cooked.</p>
+
+                        <p>Because literally any developer with access to Claude or ChatGPT can now build that on a Friday afternoon. <a href="https://martinalderson.com/posts/ai-agents-are-starting-to-eat-saas/">Martin Alderson said it perfectly</a>: if your product is just "SQL queries wrapped in a nice UI," your competition isn't other SaaS companies anymore. It's every engineer at your customer's company who has a free afternoon.</p>
+
+                        <p>Building software used to be expensive and hard. Now it's cheaper to build than to buy a subscription.</p>
+
+                        <h2>So What Actually Survives This?</h2>
+
+                        <p>Not everything dies, obviously. Payment processors aren't going anywhere. Neither are huge compliance systems or super complex infrastructure.</p>
+
+                        <p>But if your whole pitch is "we save you time on repetitive tasks," congrats, you're now competing with AI that literally never sleeps and costs less than your monthly subscription.</p>
+
+                        <p><a href="https://www.ey.com/en_us/insights/tech-sector/agentic-ai-how-saas-companies-can-embrace-the-future">EY broke it down</a>: AI is hitting SaaS in four ways - it enhances some tools, compresses others (need fewer features), outshines the simple ones, and straight-up cannibalizes the rest.</p>
+
+                        <p>The companies winning right now? They're not the ones adding "✨ AI-powered ✨" to their landing page. They're the startups that built their entire product around AI agents from day one.</p>
+
+                        <h2>What Software Companies Need to Do (If They Don't Wanna Die)</h2>
+
+                        <p><strong>Stop charging per person. That model is done.</strong></p>
+
+                        <p>If you're still doing per-seat pricing in 2026, you're already behind. The new thing is charging for outcomes or usage. "We'll charge you when our AI actually closes a sale" beats "pay us $99/month whether you use it or not."</p>
+
+                        <p><strong>Become the platform that agents use, not the app humans use.</strong></p>
+
+                        <p>The winners won't be standalone apps. They'll be the backends that 50 different AI agents connect to. Less "we're a CRM you log into" and more "we're the database that every AI agent writes to."</p>
+
+                        <p><strong>Actually partner with customers instead of just selling them software.</strong></p>
+
+                        <p>The old way: "here's the software, figure it out, call support if you're stuck."</p>
+
+                        <p>The new way: "our AI will do the actual work, and we win when you win."</p>
+
+                        <p><a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/upgrading-software-business-models-to-thrive-in-the-ai-era">McKinsey says</a> the successful companies are the ones treating customers like partners, not ATMs with a yearly renewal date.</p>
+
+                        <h2>The Bottom Line</h2>
+
+                        <p>Is software dead? Nah. But the version we've had for the last 25 years - where you pay per employee for tools humans manually operate - is absolutely dying.</p>
+
+                        <p><a href="https://www.bettercloud.com/monitor/saas-industry/">By 2026, over 80% of companies will be running AI in production</a>. That's not a prediction anymore. We're already there.</p>
+
+                        <p>The software companies that make it through won't be the ones with the prettiest UI or the most Zapier integrations. They'll be the ones who accepted that their customer might never open their app because an AI agent is already using their API.</p>
+
+                        <p>Pretty wild to think about, honestly.</p>
+                    </div>
+                    <div class="sources">
+                        <h4>Sources</h4>
+                        <ul>
+                            <li><a href="https://www.bain.com/insights/will-agentic-ai-disrupt-saas-technology-report-2025/" target="_blank" rel="noopener">Will Agentic AI Disrupt SaaS? | Bain & Company</a></li>
+                            <li><a href="https://www.glean.com/perspectives/will-ai-agents-replace-saas-tools-as-the-new-operating-layer-of-work" target="_blank" rel="noopener">Will AI agents replace SaaS? | Glean</a></li>
+                            <li><a href="https://www.constellationr.com/blog-news/insights/enterprise-technology-2026-15-ai-saas-data-business-trends-watch" target="_blank" rel="noopener">Enterprise technology 2026 | Constellation Research</a></li>
+                            <li><a href="https://martinalderson.com/posts/ai-agents-are-starting-to-eat-saas/" target="_blank" rel="noopener">AI agents are starting to eat SaaS | Martin Alderson</a></li>
+                            <li><a href="https://www.ey.com/en_us/insights/tech-sector/agentic-ai-how-saas-companies-can-embrace-the-future" target="_blank" rel="noopener">Agentic AI: how SaaS companies can embrace the future | EY</a></li>
+                            <li><a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/upgrading-software-business-models-to-thrive-in-the-ai-era" target="_blank" rel="noopener">Evolving models and monetization strategies | McKinsey</a></li>
+                            <li><a href="https://www.bettercloud.com/monitor/saas-industry/" target="_blank" rel="noopener">AI and the SaaS industry in 2026 | BetterCloud</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Create content like this</h2>
+                <p>Draper Writer iterates until quality meets your bar. No more generic AI slop.</p>
+                <a href="https://github.com/jayteststhings/draper-writer" class="cta-button" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Get Started
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>MIT License &middot; <a href="https://github.com/jayteststhings/draper-writer" target="_blank" rel="noopener">GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>

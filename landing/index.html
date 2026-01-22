@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draper Writer - Ralph Wiggum for Content</title>
+    <meta name="description" content="A Claude Code Plugin that creates high-quality content through iterative self-improvement. One excellent article is worth more than ten mediocre ones.">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #f97316;
+            --accent-dim: #ea580c;
+            --pass: #22c55e;
+            --fail: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .github-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero .tagline {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .hero .quote {
+            font-style: italic;
+            color: var(--text-muted);
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s;
+            margin-top: 32px;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-dim);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .problem h2 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .problem p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .problem strong {
+            color: var(--text);
+        }
+
+        /* Quality Loop */
+        .quality-loop {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .quality-loop h2 {
+            font-size: 1.5rem;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .loop-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .loop-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Checklist */
+        .checklist {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .checklist h2 {
+            font-size: 1.5rem;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .checklist-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--pass);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--bg);
+        }
+
+        .check-item span {
+            font-size: 0.95rem;
+        }
+
+        .check-item .criterion {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .check-item .desc {
+            color: var(--text-muted);
+        }
+
+        /* Thresholds */
+        .thresholds {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .threshold {
+            padding: 12px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .threshold .name {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .threshold .score {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Install */
+        .install {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .install h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+
+        .code-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            display: inline-block;
+            color: var(--text-muted);
+        }
+
+        .code-block .command {
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .thresholds {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">Draper Writer</a>
+            <nav class="nav-links">
+                <a href="example.html">Example</a>
+                <a href="https://github.com/jayteststhings/draper-writer" class="github-link" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Draper: Ralph Wiggum for Content</span></h1>
+                <p class="tagline">A Claude Code Plugin that creates high-quality content through iterative self-improvement, inspired by Ralph Wiggum</p>
+                <blockquote class="quote">
+                    "Anyone can generate 10 blog posts. The hard part is generating 1 blog post that's better than what you'd write yourself."
+                </blockquote>
+                <a href="https://github.com/jayteststhings/draper-writer" class="cta-button" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Get Started on GitHub
+                </a>
+            </div>
+        </section>
+
+        <section class="problem">
+            <div class="container">
+                <h2>The Problem with AI Content</h2>
+                <p>Most AI writing tools optimize for speed. You get a 1,000-word article in 30 seconds, but it reads like... AI wrote it. Generic openings, hedge words everywhere, no unique angle, claims without data.</p>
+                <p><strong>Draper Writer takes a different approach:</strong> write one piece at a time, critique it honestly, and iterate until it's actually good.</p>
+            </div>
+        </section>
+
+        <section class="quality-loop">
+            <div class="container">
+                <h2>The Quality Loop</h2>
+                <div class="loop-steps">
+                    <div class="loop-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Gather Requirements</h3>
+                            <p>Type, audience, goal, tone, word count</p>
+                        </div>
+                    </div>
+                    <div class="loop-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Research</h3>
+                            <p>Web search for data, angles, and real examples</p>
+                        </div>
+                    </div>
+                    <div class="loop-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Write Draft</h3>
+                            <p>Create version with research incorporated</p>
+                        </div>
+                    </div>
+                    <div class="loop-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Critique</h3>
+                            <p>Honest self-evaluation against 7-point checklist</p>
+                        </div>
+                    </div>
+                    <div class="loop-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>Iterate or Publish</h3>
+                            <p>Score below threshold? Fix the weakest criterion. Otherwise, ship it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="checklist">
+            <div class="container">
+                <h2>The 7-Point Quality Checklist</h2>
+                <div class="checklist-grid">
+                    <div class="check-item">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span><span class="criterion">Hook stops the scroll</span> <span class="desc">- First 2-3 sentences are compelling</span></span>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span><span class="criterion">Unique angle</span> <span class="desc">- Fresh perspective, not a generic take</span></span>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span><span class="criterion">Claims backed by data</span> <span class="desc">- Statistics, examples, or real experience</span></span>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span><span class="criterion">Sounds human</span> <span class="desc">- No AI patterns or excessive hedging</span></span>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span><span class="criterion">Actionable</span> <span class="desc">- Reader learns something they can apply</span></span>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span><span class="criterion">Meets word count</span> <span class="desc">- Within the target range</span></span>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span><span class="criterion">Matches tone</span> <span class="desc">- Voice matches what was requested</span></span>
+                    </div>
+                </div>
+                <div class="thresholds">
+                    <div class="threshold">
+                        <div class="name">Standard</div>
+                        <div class="score">5/7</div>
+                    </div>
+                    <div class="threshold">
+                        <div class="name">High (Default)</div>
+                        <div class="score">6/7</div>
+                    </div>
+                    <div class="threshold">
+                        <div class="name">Flagship</div>
+                        <div class="score">7/7</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="install">
+            <div class="container">
+                <h2>Get Started</h2>
+                <div class="code-block">
+                    <span class="command">claude mcp add draper-writer</span>
+                </div>
+                <a href="https://github.com/jayteststhings/draper-writer" class="cta-button" target="_blank" rel="noopener">
+                    View Documentation
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>MIT License &middot; <a href="https://github.com/jayteststhings/draper-writer" target="_blank" rel="noopener">GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>

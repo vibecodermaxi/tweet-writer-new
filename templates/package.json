@@ -1,0 +1,9 @@
+{
+  "name": "my-content-project",
+  "version": "1.0.0",
+  "description": "Content project using Draper Writer",
+  "type": "module",
+  "scripts": {},
+  "keywords": ["content", "writing"],
+  "license": "MIT"
+}
